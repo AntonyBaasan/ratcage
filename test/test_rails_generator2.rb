@@ -14,15 +14,16 @@ class TestRailsGenerator2 < Minitest::Test
     input_spec = {
         project: "rails",
         route_root: "people#index",
-        routes: ["root to ", ""],
+        routes: [{"get" => {"people"=>"people#index"}}],
         generate: {scaffold: "person name:string"},
         rake: "db:migrate",
         gems: {"bj" => "", "nokogiri" => "", "ratcage" => ""}
     }
 
-    result = %w(
+    result = %Q(
     generate(:scaffold, "person name:string")\n
     route "root to: 'people#index'"\n
+    route "get 'people' => 'people#index'"\n
     rake("db:migrate")\n
     gem "bj"\n
     gem "nokogiri"\n
@@ -39,7 +40,7 @@ class TestRailsGenerator2 < Minitest::Test
 
   def test_converter_with_correct_keys
     keys = [:generate,
-            :route,
+            :routes,
             :route_root,
             :rake,
             :gems]
@@ -48,13 +49,25 @@ class TestRailsGenerator2 < Minitest::Test
   end
 
   def test_convert_row_scaffold
-    input_spec = {
-        generate: {scaffold: "person name:string"},
-    }
-
-    assert_equal("generate (:scaffold, ""person name:string"")\n", @rails_generator.convert_row(input_spec.keys.first, input_spec.values.first))
-
+    input_spec = {generate: {scaffold: "person name:string"}}
+    assert_equal("generate (:scaffold, " "person name:string" ")\n", @rails_generator.convert_row(input_spec.keys.first, input_spec.values.first))
   end
 
+  def test_convert_row_route_root
+    input_spec = {route_root: "people#index"}
+    assert_equal(%Q(route "root to: 'people#index'"\n), @rails_generator.convert_row(input_spec.keys.first, input_spec.values.first))
+  end
+
+  def test_convert_row_route
+    input_spec = {routes: [{"get" => {"people"=>"people#index"}}]}
+
+    assert_equal(%Q(route "get 'people' => 'people#index'"\n), @rails_generator.convert_row(input_spec.keys.first, input_spec.values.first))
+  end
+  def test_convert_row_route_multi_rows
+    input_spec = {routes: [{"get" => {"people"=>"people#index"}}, {"post" => {"people/edit"=>"people#edit"}}]}
+
+    assert_equal(%Q(route "get 'people' => 'people#index'"\nroute "post 'people/edit' => 'people#edit'"\n),
+                 @rails_generator.convert_row(input_spec.keys.first, input_spec.values.first))
+  end
 
 end

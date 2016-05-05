@@ -9,7 +9,7 @@ class RailsGenerator
     #     gems: {"bj"=>"", "nokogiri"=>"", "ratcage"=>""}
     # }
 
-    %w(
+    %Q(
     generate(:scaffold, "person name:string")
     route "root to: 'people#index'"
     rake("db:migrate")
@@ -32,16 +32,27 @@ class RailsGenerator
 
     return "" unless convert_row?(key)
 
+    # create "generate" string
+    return "#{key.to_s} (:#{value.keys.first}, #{value.values.first})\n" if key == :generate
+    # create "root route" string
+    return %Q(route "root to: '#{value}'"\n) if key == :route_root
+    # create "routes" string
+    if key == :routes
+      str = ""
+      value.each do |value|
+        str += %Q(route "#{value.keys.first} '#{value.values.first.keys.first}' => '#{value.values.first.values.first}'"\n)
+      end
+      return str
+    end
 
-    return "#{key.to_s} (:#{value.keys.first}, #{value[value.keys.first]})\n" if key == :generate
 
-    ""
+    # ""
 
   end
 
   def convert_row? key
     return true if (key == :generate)
-    return true if (key == :route)
+    return true if (key == :routes)
     return true if (key == :route_root)
     return true if (key == :rake)
     return true if (key == :gems)
