@@ -6,7 +6,11 @@ Gem::Specification.new do |s|
   s.description = "A simple gem that helps to generat Rails Application Template from spec file"
   s.authors     = ["Antony Baasandorj"]
   s.email       = 'antony.baasan@gmail.com'
-  s.files       = ["lib/ratcage.rb"]
+  s.files       = %w(lib/ratcage.rb
+                      lib/generator/generator_factory.rb
+                      lib/generator/rails_generator.rb
+                      lib/generator/node_generator.rb
+                    )
   s.homepage    = 'http://rubygems.org/gems/ratcage'
   s.license     = 'MIT'
 end
