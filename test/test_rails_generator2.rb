@@ -60,9 +60,9 @@ class TestRailsGenerator2 < Minitest::Test
 
   def test_convert_row_route
     input_spec = {routes: [{"get" => {"people"=>"people#index"}}]}
-
     assert_equal(%Q(route "get 'people' => 'people#index'"\n), @rails_generator.convert_row(input_spec.keys.first, input_spec.values.first))
   end
+
   def test_convert_row_route_multi_rows
     input_spec = {routes: [{"get" => {"people"=>"people#index"}}, {"post" => {"people/edit"=>"people#edit"}}]}
 
