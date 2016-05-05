@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/AntonyBaasan/ratcage/badges/gpa.svg)](https://codeclimate.com/github/AntonyBaasan/ratcage)
+
 #RATcage
 Ruby gem that helps to generate  [Rails Application Templates](http://guides.rubyonrails.org/rails_application_templates.html) (RAT)
 
