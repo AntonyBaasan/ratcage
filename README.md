@@ -1,4 +1,4 @@
-#Ratgace
+#RATcage
 Ruby gem that helps to generate  [Rails Application Templates](http://guides.rubyonrails.org/rails_application_templates.html) (RAT)
 
 ###Usage:
