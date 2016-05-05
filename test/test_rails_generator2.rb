@@ -70,4 +70,10 @@ class TestRailsGenerator2 < Minitest::Test
                  @rails_generator.convert_row(input_spec.keys.first, input_spec.values.first))
   end
 
+  def test_convert_row_rake
+    input_spec = {rake: "db:migrate"}
+    assert_equal(%Q(rake "db:migrate"\n), @rails_generator.convert_row(input_spec.keys.first, input_spec.values.first))
+  end
+  def test_convert_row_gems
+  end
 end

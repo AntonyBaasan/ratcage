@@ -45,6 +45,7 @@ class RailsGenerator
       return str
     end
 
+    return %Q(rake "#{value}"\n) if key == :rake
 
     # ""
 
