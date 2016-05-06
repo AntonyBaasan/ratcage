@@ -39,12 +39,12 @@ class RailsGenerator
     # create "routes" string
     if key == :routes
       str = ""
-      value.each do |value|
-        str += %Q(route "#{value.keys.first} '#{value.values.first.keys.first}' => '#{value.values.first.values.first}'"\n)
+      value.each do |route|
+        str += %Q(route "#{route.keys.first} '#{route.values.first.keys.first}' => '#{route.values.first.values.first}'"\n)
       end
       return str
     end
-
+    # create "routes" string
     return %Q(rake "#{value}"\n) if key == :rake
 
     # ""
