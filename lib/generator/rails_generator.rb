@@ -44,7 +44,10 @@ class RailsGenerator
       end
       return str
     end
-    # create "routes" string
+    # create "rake" string
+    return %Q(rake "#{value}"\n) if key == :rake
+
+    # create "rake" string
     return %Q(rake "#{value}"\n) if key == :rake
 
     # ""
